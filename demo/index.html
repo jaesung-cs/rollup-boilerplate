@@ -1,20 +1,82 @@
 <head>
     <title>Testing livereload</title>
-</head>
 
-<body>
-    <div id="text-div"></div>
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
     <script type="importmap">
     {
         "imports": {
+            "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/",
             "rollup-boilerplate": "../dist/bundle.js"
         }
     }
     </script>
+    <style>
+        .renderer {
+            width: 75%;
+            height: 75%;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="text-div"></div>
+    <div class="renderer"></div>
+
     <script type="module">
-        import { add } from "rollup-boilerplate";
+        import * as THREE from "three";
+        import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+        import { add, CustomObject } from "rollup-boilerplate";
 
         const textDiv = document.getElementById("text-div");
         textDiv.textContent = `Hello! 2+3=${add(2,3)}`;
+
+        const rendererDiv = document.getElementsByClassName("renderer").item(0);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        rendererDiv.append(renderer.domElement);
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color("#808080");
+
+        const axis = new THREE.AxesHelper();
+        scene.add(axis);
+
+        const object = new CustomObject();
+        scene.add(object);
+
+        const camera = new THREE.PerspectiveCamera(90., 1., 0.01, 100.);
+        camera.position.set(1, 1, 1);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.update();
+
+        let width = 0;
+        let height = 0;
+        const resize = () => {
+            const divWidth = rendererDiv.clientWidth;
+            const divHeight = rendererDiv.clientHeight;
+            if (width !== divWidth || height !== divHeight) {
+                renderer.setSize(divWidth, divHeight);
+                width = divWidth;
+                height = divHeight;
+
+                const aspect = width / height;
+                camera.aspect = aspect;
+                camera.updateProjectionMatrix();
+            }
+        }
+
+        const animate = () => {
+            requestAnimationFrame(animate);
+            resize();
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        requestAnimationFrame(animate);
     </script>
 </body>
