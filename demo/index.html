@@ -1,0 +1,13 @@
+<head>
+    <title>Testing livereload</title>
+</head>
+
+<body>
+    <div id="text-div"></div>
+    <script type="module">
+        import { add } from "../dist/bundle.js";
+
+        const textDiv = document.getElementById("text-div");
+        textDiv.textContent = `Hello! 2+3=${add(2,3)}`;
+    </script>
+</body>

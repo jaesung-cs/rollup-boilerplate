@@ -1,0 +1,26 @@
+{
+  "name": "rollup-boilerplate",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaesung-cs/rollup-boilerplate.git"
+  },
+  "author": "jaesung-cs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaesung-cs/rollup-boilerplate/issues"
+  },
+  "homepage": "https://github.com/jaesung-cs/rollup-boilerplate#readme",
+  "devDependencies": {
+    "rollup": "^3.28.1",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-serve": "^2.0.2"
+  }
+}
