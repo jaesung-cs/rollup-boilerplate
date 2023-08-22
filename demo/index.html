@@ -4,8 +4,15 @@
 
 <body>
     <div id="text-div"></div>
+    <script type="importmap">
+    {
+        "imports": {
+            "rollup-boilerplate": "../dist/bundle.js"
+        }
+    }
+    </script>
     <script type="module">
-        import { add } from "../dist/bundle.js";
+        import { add } from "rollup-boilerplate";
 
         const textDiv = document.getElementById("text-div");
         textDiv.textContent = `Hello! 2+3=${add(2,3)}`;
